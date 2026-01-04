@@ -4,7 +4,7 @@
   <id>http://localhost:4000/</id>
   <title>꿀꺽개발블로그</title>
   <subtitle>A minimal, responsive and feature-rich Jekyll theme for technical writing.</subtitle>
-  <updated>2024-08-25T11:15:34+09:00</updated>
+  <updated>2026-01-05T05:05:52+09:00</updated>
   <author>
     <name>your_full_name</name>
     <uri>http://localhost:4000/</uri>
@@ -12,11 +12,35 @@
   <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml"/>
   <link rel="alternate" type="text/html" hreflang="ko-KR"
     href="http://localhost:4000/"/>
-  <generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator>
-  <rights> © 2024 your_full_name </rights>
+  <generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator>
+  <rights> © 2026 your_full_name </rights>
   <icon>/assets/img/favicons/favicon.ico</icon>
   <logo>/assets/img/favicons/favicon-96x96.png</logo>
 
+
+  
+  <entry>
+    <title>CloudWatch Logs에서 특정 log group의 로그를 S3으로 export하는 방법 + 최소 권한 원칙으로 S3 권한설정</title>
+    <link href="http://localhost:4000/posts/cloudwatch-logs%EC%97%90%EC%84%9C-%ED%8A%B9%EC%A0%95-log-group%EC%9D%98-%EB%A1%9C%EA%B7%B8%EB%A5%BC-s3%EC%9C%BC%EB%A1%9C-export%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95-%EC%B5%9C%EC%86%8C-%EA%B6%8C%ED%95%9C-%EC%9B%90%EC%B9%99%EC%9C%BC%EB%A1%9C-s3-%EA%B6%8C%ED%95%9C%EC%84%A4%EC%A0%95/" rel="alternate" type="text/html" title="CloudWatch Logs에서 특정 log group의 로그를 S3으로 export하는 방법 + 최소 권한 원칙으로 S3 권한설정" />
+    <published>2026-01-05T04:12:41+09:00</published>
+  
+    <updated>2026-01-05T04:53:08+09:00</updated>
+  
+    <id>http://localhost:4000/posts/cloudwatch-logs%EC%97%90%EC%84%9C-%ED%8A%B9%EC%A0%95-log-group%EC%9D%98-%EB%A1%9C%EA%B7%B8%EB%A5%BC-s3%EC%9C%BC%EB%A1%9C-export%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95-%EC%B5%9C%EC%86%8C-%EA%B6%8C%ED%95%9C-%EC%9B%90%EC%B9%99%EC%9C%BC%EB%A1%9C-s3-%EA%B6%8C%ED%95%9C%EC%84%A4%EC%A0%95/</id>
+    <content type="text/html" src="http://localhost:4000/posts/cloudwatch-logs%EC%97%90%EC%84%9C-%ED%8A%B9%EC%A0%95-log-group%EC%9D%98-%EB%A1%9C%EA%B7%B8%EB%A5%BC-s3%EC%9C%BC%EB%A1%9C-export%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95-%EC%B5%9C%EC%86%8C-%EA%B6%8C%ED%95%9C-%EC%9B%90%EC%B9%99%EC%9C%BC%EB%A1%9C-s3-%EA%B6%8C%ED%95%9C%EC%84%A4%EC%A0%95/" />
+    <author>
+      <name>your_full_name</name>
+    </author>
+
+  
+    
+    <category term="imported" />
+    
+  
+
+  <summary>1. 일반 export 과정 내가 날짜(시간)을 정하면 해당 로그가 그대로 s3으로 export 되는 기능이다.  웹 콘솔에서 해당 log group → Export data to Amazon S3 → 날짜 설정 하고 내보낼 버킷을 설정한다.  해당 s3 버킷에 성공적으로 export 된것을 확인할 수 있다.          aws-logs-write-test가 export 할 때마다 새로 갱신된다.이는 한번 export 할 때 export하는 범위가 넓으면 로그도 많고, 로그 파일 크기도 크기 때문에, 쓰기 작업 시작 전의 확인 절차로 보인다.\           아까 bucket prefix를 log1/로 정했었다. 해당 prefix에 정상적으로 저장되었으며, 현재 Task Id가 내가 최초로 정한...</summary>
+
+  </entry>
 
   
   <entry>
@@ -24,10 +48,10 @@
     <link href="http://localhost:4000/posts/%EB%B8%94%EB%A1%9C%EA%B7%B8-%EC%B0%BD%EC%84%A4/" rel="alternate" type="text/html" title="글 형식 참고" />
     <published>2024-08-24T02:35:00+09:00</published>
   
-    <updated>2024-08-24T02:35:00+09:00</updated>
+    <updated>2024-08-25T11:16:03+09:00</updated>
   
     <id>http://localhost:4000/posts/%EB%B8%94%EB%A1%9C%EA%B7%B8-%EC%B0%BD%EC%84%A4/</id>
-    <content src="http://localhost:4000/posts/%EB%B8%94%EB%A1%9C%EA%B7%B8-%EC%B0%BD%EC%84%A4/" />
+    <content type="text/html" src="http://localhost:4000/posts/%EB%B8%94%EB%A1%9C%EA%B7%B8-%EC%B0%BD%EC%84%A4/" />
     <author>
       <name>꿀꺽</name>
     </author>
@@ -36,25 +60,7 @@
     
   
 
-  <summary>Github Actions란?
-hello!
-
-Headings
-
-
-
-H1 — heading
-
-H2 — heading
-
-H3 — heading
-
-H4 — heading
-
-
-Paragraph
-
-Quisque egestas convallis ipsum, ut sollicitudin risus tincidunt a. Maecenas interdum malesuada egestas. Duis consectetur porta risus, sit amet vulputate urna facilisis ac. Phasellus semper dui non purus ultrices sodales. Aliquam ante lorem, ornare a feugiat ac, finibus nec mauris. Vivamus u...</summary>
+  <summary>Github Actions란? hello!  Headings    H1 — heading  H2 — heading  H3 — heading  H4 — heading   Paragraph  Quisque egestas convallis ipsum, ut sollicitudin risus tincidunt a. Maecenas interdum malesuada egestas. Duis consectetur porta risus, sit amet vulputate urna facilisis ac. Phasellus semper dui non purus ultrices sodales. Aliquam ante lorem, ornare a feugiat ac, finibus nec mauris. Vivamus u...</summary>
 
   </entry>
 

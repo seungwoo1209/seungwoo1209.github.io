@@ -19,7 +19,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f7f7">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1b1b1e">
-  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta
     name="viewport"
@@ -29,7 +29,7 @@
   
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<meta name="generator" content="Jekyll v4.3.3" />
+<meta name="generator" content="Jekyll v4.4.1" />
 <meta property="og:title" content="글 형식 참고" />
 <meta name="author" content="꿀꺽" />
 <meta property="og:locale" content="ko_KR" />
@@ -45,7 +45,7 @@
 <meta name="twitter:site" content="@twitter_username" />
 <meta name="twitter:creator" content="@꿀꺽" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"꿀꺽"},"dateModified":"2024-08-24T02:35:00+09:00","datePublished":"2024-08-24T02:35:00+09:00","description":"Github Actions란? hello!","headline":"글 형식 참고","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/posts/%EB%B8%94%EB%A1%9C%EA%B7%B8-%EC%B0%BD%EC%84%A4/"},"url":"http://localhost:4000/posts/%EB%B8%94%EB%A1%9C%EA%B7%B8-%EC%B0%BD%EC%84%A4/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"꿀꺽"},"dateModified":"2024-08-25T11:16:03+09:00","datePublished":"2024-08-24T02:35:00+09:00","description":"Github Actions란? hello!","headline":"글 형식 참고","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/posts/%EB%B8%94%EB%A1%9C%EA%B7%B8-%EC%B0%BD%EC%84%A4/"},"url":"http://localhost:4000/posts/%EB%B8%94%EB%A1%9C%EA%B7%B8-%EC%B0%BD%EC%84%A4/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -59,18 +59,13 @@
 
 
 
+<link rel="icon" type="image/png" href="/assets/img/favicons/favicon-96x96.png" sizes="96x96">
+<link rel="icon" type="image/svg+xml" href="/assets/img/favicons/favicon.svg">
+<link rel="shortcut icon" href="/assets/img/favicons/favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png">
 
   <link rel="manifest" href="/assets/img/favicons/site.webmanifest">
 
-<link rel="shortcut icon" href="/assets/img/favicons/favicon.ico">
-<meta name="apple-mobile-web-app-title" content="꿀꺽개발블로그">
-<meta name="application-name" content="꿀꺽개발블로그">
-<meta name="msapplication-TileColor" content="#da532c">
-<meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml">
-<meta name="theme-color" content="#ffffff">
 
 
   <!-- Resource Hints -->
@@ -98,7 +93,7 @@
 
   <!-- Bootstrap -->
   
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
   
 
   <!-- Theme style -->
@@ -108,12 +103,12 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Source+Sans+Pro:wght@400;600;700;900&display=swap">
 
   <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css">
 
   <!-- 3rd-party Dependencies -->
 
   
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tocbot@4.27.20/dist/tocbot.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tocbot@4.36.4/dist/tocbot.min.css">
   
 
   
@@ -125,114 +120,124 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css">
   
 
-  <!-- JavaScript -->
+  <!-- Scripts -->
+
+  <script src="/assets/js/dist/theme.min.js"></script>
+
+  <!-- JS selector for site. -->
+
+<!-- commons -->
+
+
+
+<!-- layout specified -->
+
 
   
-    <!-- Switch the mode between dark and light. -->
 
-<script type="text/javascript">
-  class ModeToggle {
-    static get MODE_KEY() {
-      return 'mode';
-    }
-    static get MODE_ATTR() {
-      return 'data-mode';
-    }
-    static get DARK_MODE() {
-      return 'dark';
-    }
-    static get LIGHT_MODE() {
-      return 'light';
-    }
-    static get ID() {
-      return 'mode-toggle';
-    }
+  
+    <!-- image lazy-loading & popup & clipboard -->
+    
+  
 
-    constructor() {
-      let self = this;this.sysDarkPrefers.addEventListener('change', () => {
-        if (self.hasMode) {
-          self.clearMode();
-        }
-        self.notify();
-      });
 
-      if (!this.hasMode) {
-        return;
-      }
 
-      if (this.isDarkMode) {
-        this.setDark();
-      } else {
-        this.setLight();
-      }
-    }
 
-    get sysDarkPrefers() {
-      return window.matchMedia('(prefers-color-scheme: dark)');
-    }
 
-    get isPreferDark() {
-      return this.sysDarkPrefers.matches;
-    }
 
-    get isDarkMode() {
-      return this.mode === ModeToggle.DARK_MODE;
-    }
 
-    get hasMode() {
-      return this.mode != null;
-    }
 
-    get mode() {
-      return sessionStorage.getItem(ModeToggle.MODE_KEY);
-    }get modeStatus() {
-      if (this.hasMode) {
-        return this.mode;
-      } else {
-        return this.isPreferDark ? ModeToggle.DARK_MODE : ModeToggle.LIGHT_MODE;
-      }
-    }
 
-    setDark() {
-      document.documentElement.setAttribute(ModeToggle.MODE_ATTR, ModeToggle.DARK_MODE);
-      sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE);
-    }
 
-    setLight() {
-      document.documentElement.setAttribute(ModeToggle.MODE_ATTR, ModeToggle.LIGHT_MODE);
-      sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE);
-    }
 
-    clearMode() {
-      document.documentElement.removeAttribute(ModeToggle.MODE_ATTR);
-      sessionStorage.removeItem(ModeToggle.MODE_KEY);
-    }notify() {
-      window.postMessage(
-        {
-          direction: ModeToggle.ID,
-          message: this.modeStatus
-        },
-        '*'
-      );
-    }
 
-    flipMode() {
-      if (this.hasMode) {
-        this.clearMode();
-      } else {
-        if (this.isPreferDark) {
-          this.setLight();
-        } else {
-          this.setDark();
-        }
-      }
 
-      this.notify();
-    }
-  }
 
-  const modeToggle = new ModeToggle();
-</script>
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/combine/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js,npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.umd.min.js,npm/glightbox@3.3.0/dist/js/glightbox.min.js,npm/clipboard@2.0.11/dist/clipboard.min.js,npm/dayjs@1.11.18/dayjs.min.js,npm/dayjs@1.11.18/locale/ko.js,npm/dayjs@1.11.18/plugin/relativeTime.js,npm/dayjs@1.11.18/plugin/localizedFormat.js,npm/tocbot@4.36.4/dist/tocbot.min.js"></script>
+
+
+
+
+
+
+
+<script defer src="/assets/js/dist/post.min.js"></script>
+
+
+
+<!-- Pageviews -->
+
+  
+
+  
+
+
 
   
 
@@ -248,9 +253,7 @@
   <header class="profile-wrapper">
     <a href="/" id="avatar" class="rounded-circle"></a>
 
-    <h1 class="site-title">
-      <a href="/">꿀꺽개발블로그</a>
-    </h1>
+    <a class="site-title d-block" href="/">꿀꺽개발블로그</a>
     <p class="site-subtitle fst-italic mb-0">A text-focused Jekyll theme</p>
   </header>
   <!-- .profile-wrapper -->
@@ -321,7 +324,6 @@
     
 
     
-      
 
       
         <a
@@ -344,7 +346,6 @@
         </a>
       
     
-      
 
       
         <a
@@ -367,7 +368,6 @@
         </a>
       
     
-      
 
       
         <a
@@ -385,7 +385,8 @@
         </a>
       
     
-      
+          
+        
 
       
         <a
@@ -413,7 +414,7 @@
       <div class="container d-flex flex-column px-xxl-5">
         <!-- The Top Bar -->
 
-<header id="topbar-wrapper" aria-label="Top Bar">
+<header id="topbar-wrapper" class="flex-shrink-0" aria-label="Top Bar">
   <div
     id="topbar"
     class="d-flex align-items-center justify-content-between px-lg-3 h-100"
@@ -443,7 +444,7 @@
     </nav>
     <!-- endof #breadcrumb -->
 
-    <button type="button" id="sidebar-trigger" class="btn btn-link">
+    <button type="button" id="sidebar-trigger" class="btn btn-link" aria-label="Sidebar">
       <i class="fas fa-bars fa-fw"></i>
     </button>
 
@@ -451,7 +452,7 @@
       포스트
     </div>
 
-    <button type="button" id="search-trigger" class="btn btn-link">
+    <button type="button" id="search-trigger" class="btn btn-link" aria-label="Search">
       <i class="fas fa-search fa-fw"></i>
     </button>
 
@@ -692,7 +693,13 @@
 
 
 
-<article class="px-1">
+
+
+
+
+
+
+<article class="px-1" data-toc="true">
   <header>
     <h1 data-toc-skip>글 형식 참고</h1>
     
@@ -723,6 +730,29 @@
       </span>
 
       <!-- lastmod date -->
+      
+        <span>
+          업데이트
+          <!--
+  Date format snippet
+  See: ${JS_ROOT}/utils/locale-dateime.js
+-->
+
+
+
+
+<time
+  
+  data-ts="1724552163"
+  data-df="YYYY/MM/DD"
+  
+    data-bs-toggle="tooltip" data-bs-placement="bottom"
+  
+>
+  2024/08/25
+</time>
+
+        </span>
       
 
       
@@ -777,6 +807,30 @@
       </div>
     </div>
   </header>
+
+  
+    <div id="toc-bar" class="d-flex align-items-center justify-content-between invisible">
+      <span class="label text-truncate">글 형식 참고</span>
+      <button type="button" class="toc-trigger btn me-1">
+        <i class="fa-solid fa-list-ul fa-fw"></i>
+      </button>
+    </div>
+
+    <button id="toc-solo-trigger" type="button" class="toc-trigger btn btn-outline-secondary btn-sm">
+      <span class="label ps-2 pe-1">바로가기</span>
+      <i class="fa-solid fa-angle-right fa-fw"></i>
+    </button>
+
+    <dialog id="toc-popup" class="p-0">
+      <div class="header d-flex flex-row align-items-center justify-content-between">
+        <div class="label text-truncate py-2 ms-4">글 형식 참고</div>
+        <button id="toc-popup-close" type="button" class="btn mx-1 my-1 opacity-75">
+          <i class="fas fa-close"></i>
+        </button>
+      </div>
+      <div id="toc-popup-content" class="px-4 py-3 pb-4"></div>
+    </dialog>
+  
 
   <div class="content">
     <h4 id="github-actions란"><span class="me-2">Github Actions란?</span><a href="#github-actions란" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4>
@@ -1022,7 +1076,7 @@
           </main>
 
           <!-- panel -->
-          <aside aria-label="Panel" id="panel-wrapper" class="col-xl-3 ps-2 mb-5 text-muted">
+          <aside aria-label="Panel" id="panel-wrapper" class="col-xl-3 ps-2 text-muted">
             <div class="access">
               <!-- Get 5 last posted/updated posts -->
 
@@ -1042,6 +1096,13 @@
   <section id="access-lastmod">
     <h2 class="panel-heading">최근 업데이트</h2>
     <ul class="content list-unstyled ps-0 pb-1 ms-1 mt-2">
+      
+        
+        
+        
+        <li class="text-truncate lh-lg">
+          <a href="/posts/cloudwatch-logs%EC%97%90%EC%84%9C-%ED%8A%B9%EC%A0%95-log-group%EC%9D%98-%EB%A1%9C%EA%B7%B8%EB%A5%BC-s3%EC%9C%BC%EB%A1%9C-export%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95-%EC%B5%9C%EC%86%8C-%EA%B6%8C%ED%95%9C-%EC%9B%90%EC%B9%99%EC%9C%BC%EB%A1%9C-s3-%EA%B6%8C%ED%95%9C%EC%84%A4%EC%A0%95/">CloudWatch Logs에서 특정 log group의 로그를 S3으로 export하는 방법 + 최소 권한 원칙으로 S3 권한설정</a>
+        </li>
       
         
         
@@ -1101,8 +1162,12 @@
 
 
 
-  <section id="toc-wrapper" class="d-none ps-0 pe-4">
-    <h2 class="panel-heading ps-3 mb-2">바로가기</h2>
+
+
+
+  <div class="toc-border-cover z-3"></div>
+  <section id="toc-wrapper" class="invisible position-sticky ps-0 pe-4 pb-4">
+    <h2 class="panel-heading ps-3 pb-2 mb-0">바로가기</h2>
     <nav id="toc"></nav>
   </section>
 
@@ -1170,16 +1235,15 @@
   
 
   
-    <div class="btn btn-outline-primary disabled" aria-label="다음 글">
-      <p>-</p>
-    </div>
+    <a
+      href="/posts/cloudwatch-logs%E1%84%8B%E1%85%A6%E1%84%89%E1%85%A5-%E1%84%90%E1%85%B3%E1%86%A8%E1%84%8C%E1%85%A5%E1%86%BC-log-group%E1%84%8B%E1%85%B4-%E1%84%85%E1%85%A9%E1%84%80%E1%85%B3%E1%84%85%E1%85%B3%E1%86%AF-s3%E1%84%8B%E1%85%B3%E1%84%85%E1%85%A9-export%E1%84%92%E1%85%A1%E1%84%82%E1%85%B3%E1%86%AB-%E1%84%87%E1%85%A1%E1%86%BC%E1%84%87%E1%85%A5%E1%86%B8-%E1%84%8E%E1%85%AC%E1%84%89%E1%85%A9-%E1%84%80%E1%85%AF%E1%86%AB%E1%84%92%E1%85%A1%E1%86%AB-%E1%84%8B%E1%85%AF%E1%86%AB%E1%84%8E%E1%85%B5%E1%86%A8%E1%84%8B%E1%85%B3%E1%84%85%E1%85%A9-s3-%E1%84%80%E1%85%AF%E1%86%AB%E1%84%92%E1%85%A1%E1%86%AB%E1%84%89%E1%85%A5%E1%86%AF%E1%84%8C%E1%85%A5%E1%86%BC/"
+      class="btn btn-outline-primary"
+      aria-label="다음 글"
+    >
+      <p>CloudWatch Logs에서 특정 log group의 로그를 S3으로 export하는 방법 + 최소 권한 원칙으로 S3 권한설정</p>
+    </a>
   
 </nav>
-
-            
-              
-              <!-- The comments switcher -->
-
 
             
 
@@ -1193,7 +1257,7 @@
   "
 >
   <p>©
-    <time>2024</time>
+    <time>2026</time>
 
     
       <a href="https://twitter.com/username">your_full_name</a>.
@@ -1211,7 +1275,7 @@
   <p>Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a
         data-bs-toggle="tooltip"
         data-bs-placement="top"
-        title="v7.0.1"
+        title="v7.4.1"
         href="https://github.com/cotes2020/jekyll-theme-chirpy"
         target="_blank"
         rel="noopener"
@@ -1279,7 +1343,7 @@
       </aside>
     </div>
 
-    <div id="mask"></div>
+    <div id="mask" class="d-none position-fixed w-100 h-100 z-1"></div>
 
     
       <aside
@@ -1309,126 +1373,14 @@
 
     
 
-    <!-- JavaScripts -->
-    <!-- JS selector for site. -->
-
-<!-- commons -->
-
-
-
-<!-- layout specified -->
-
-
-
-
-  
-
-  
-    <!-- image lazy-loading & popup & clipboard -->
-    
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-    
+    <!-- Embedded scripts -->
 
     
+      
+      <!-- The comments switcher -->
 
-  
-
-  
-    
 
     
-
-  
-
-  
-    
-
-    
-
-  
-
-  
-    
-
-    
-
-  
-
-  
-    
-
-    
-
-  
-
-  
-    
-
-    
-
-  
-
-  
-    
-
-    
-
-  
-
-  
-    
-
-    
-
-  
-
-  
-    
-
-    
-
-  
-
-
-
-  <script src="https://cdn.jsdelivr.net/combine/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js,npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.umd.min.js,npm/glightbox@3.3.0/dist/js/glightbox.min.js,npm/clipboard@2.0.11/dist/clipboard.min.js,npm/dayjs@1.11.11/dayjs.min.js,npm/dayjs@1.11.11/locale/ko.min.js,npm/dayjs@1.11.11/plugin/relativeTime.min.js,npm/dayjs@1.11.11/plugin/localizedFormat.min.js,npm/tocbot@4.27.20/dist/tocbot.min.js"></script>
-
-
-
-
-
-
-<script src="/assets/js/dist/post.min.js"></script>
-
-
-
-<!-- Pageviews -->
-
-  
-
-  
-
-
-
-
-
-
 
     <!--
   Jekyll Simple Search loader
@@ -1439,29 +1391,33 @@
 
 
 
-<script>SimpleJekyllSearch({
-    searchInput: document.getElementById('search-input'),
-    resultsContainer: document.getElementById('search-results'),
-    json: '/assets/js/data/search.json',
-    searchResultTemplate: '  <article class="px-1 px-sm-2 px-lg-4 px-xl-0">    <header>      <h2><a href="{url}">{title}</a></h2>      <div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1">        {categories}        {tags}      </div>    </header>    <p>{snippet}</p>  </article>',
-    noResultsText: '<p class="mt-5">검색 결과가 없습니다.</p>',
-    templateMiddleware: function(prop, value, template) {
-      if (prop === 'categories') {
-        if (value === '') {
-          return `${value}`;
-        } else {
-          return `<div class="me-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`;
+<script>
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/assets/js/data/search.json',
+      searchResultTemplate: '  <article class="px-1 px-sm-2 px-lg-4 px-xl-0">    <header>      <h2><a href="{url}">{title}</a></h2>      <div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1">        {categories}        {tags}      </div>    </header>    <p>{content}</p>  </article>',
+      noResultsText: '<p class="mt-5">검색 결과가 없습니다.</p>',
+      templateMiddleware: function(prop, value, template) {
+        if (prop === 'categories') {
+          if (value === '') {
+            return `${value}`;
+          } else {
+            return `<div class="me-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`;
+          }
         }
-      }
 
-      if (prop === 'tags') {
-        if (value === '') {
-          return `${value}`;
-        } else {
-          return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`;
+        if (prop === 'tags') {
+          if (value === '') {
+            return `${value}`;
+          } else {
+            return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`;
+          }
         }
       }
-    }
+    });
   });
 </script>
 
