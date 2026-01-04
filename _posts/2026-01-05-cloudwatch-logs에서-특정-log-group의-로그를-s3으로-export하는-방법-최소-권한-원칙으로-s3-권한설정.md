@@ -1,4 +1,5 @@
----layout: post
+---
+layout: post
 title: "CloudWatch Logs에서 특정 log group의 로그를 S3으로 export하는 방법 + 최소 권한 원칙으로 S3 권한설정"
 date: 2026-01-05 04:12:41 +0900
 categories: [imported]
