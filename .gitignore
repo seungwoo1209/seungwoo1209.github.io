@@ -27,3 +27,7 @@ assets/js/dist
 
 # macOS
 .DS_Store
+
+# notion markdown .zip
+sources-zip/*
+!sources-zip/.gitkeep
