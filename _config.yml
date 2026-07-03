@@ -16,10 +16,10 @@ timezone: Asia/Seoul
 
 title: sw's blog # the main title
 
-tagline: CS, 프로젝트, 정리하고싶은 내용 정리 # it will display as the sub-title
+tagline: CS, 프로젝트, 공부한내용 정리 # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
-  CS, 프로젝트, 정리하고싶은 내용 정리
+  CS, 프로젝트, 공부한내용 정리
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.
