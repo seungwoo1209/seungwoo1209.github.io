@@ -16,7 +16,7 @@ timezone: Asia/Seoul
 
 title: sw's blog # the main title
 
-tagline: 곧 정할 예정.. # it will display as the sub-title
+tagline: CS, 프로젝트 그리고 정리하고싶은 내용 정리 # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   CS, 프로젝트 그리고 정리하고싶은 내용 정리
