@@ -28,6 +28,6 @@ assets/js/dist
 # macOS
 .DS_Store
 
-# notion markdown .zip
-sources-zip/*
-!sources-zip/.gitkeep
+# draft drop folder (Notion zip / Bear-Obsidian export)
+sources/*
+!sources/.gitkeep

@@ -1,21 +1,36 @@
 ---
 name: new-post
-description: Scaffold a new Chirpy blog post from draft notes (usually a Notion export zip under sources-zip/, sometimes Bear/Obsidian). Creates the dated _posts file with correct front matter, converts note-app image syntax to Jekyll /assets/img paths, and moves referenced images into assets/img/<slug>/. Use when the user wants to publish/add a blog post or turn draft notes into a post.
+description: Scaffold a new Chirpy blog post from draft notes dropped in sources/ — either a Notion export zip or a Bear/Obsidian export (.md plus a sibling image folder, or a .textbundle). Creates the dated _posts file with correct front matter, converts note-app image syntax to Jekyll /assets/img paths, and moves referenced images into assets/img/<slug>/. Use when the user wants to publish/add a blog post or turn draft notes into a post.
 ---
 
 # Scaffold a new blog post
 
-**Default source:** unless the user says otherwise, the draft starts from a zip under `sources-zip/` (a Notion "Export block" archive). `$ARGUMENTS` may instead be a path to a note file/folder, pasted content, or a topic. If `sources-zip/` has no zip and no other draft is given, ask for the draft or title.
+**Default source:** unless the user says otherwise, the draft comes from `sources/` (git-ignored drop folder). Two shapes land there — detect which by listing the folder:
+
+| Source | What's in `sources/` |
+|---|---|
+| **Notion** | a single `...ExportBlock-....zip` |
+| **Bear / Obsidian** | a `<Title>.md` **plus a sibling `<Title>/` folder** of images (or a `.textbundle`) |
+
+`$ARGUMENTS` may instead be a path to a note file/folder, pasted content, or a topic. If `sources/` is empty and no other draft is given, ask for the draft or title. If several drafts are present, process the newest and say which one you picked.
 
 ## Steps
 
-0. **Extract the Notion zip** (when starting from `sources-zip/`).
-   - The archive is a **zip-in-a-zip**: the outer zip contains an inner `...-Part-1.zip`. Extract the outer first, then the inner.
-   - Korean filenames break `unzip` ("Illegal byte sequence") — use macOS `ditto` to preserve UTF-8 names:
-     ```bash
-     ditto -x -k "<inner>-Part-1.zip" <destdir>
-     ```
-   - The `.md` file inside is the draft; its sibling folder holds the images. If multiple zips exist, ask which one (or process the newest). Extract to the scratchpad, not the repo.
+0. **Unpack the draft** (skip if `$ARGUMENTS` already points at a `.md`).
+
+   **Notion zip** — the archive is a **zip-in-a-zip**: the outer zip contains an inner `...-Part-1.zip`. Extract the outer first, then the inner. Korean filenames break `unzip` ("Illegal byte sequence") — use macOS `ditto` to preserve UTF-8 names:
+   ```bash
+   ditto -x -k "<inner>-Part-1.zip" <destdir>
+   ```
+   Extract to the scratchpad, not the repo. The `.md` inside is the draft; its sibling folder holds the images.
+
+   **Bear / Obsidian** — already unpacked; read the `.md` in place. For a `.textbundle`, the draft is `<bundle>/text.md` and images are in `<bundle>/assets/`. Quirks to expect on top of the shared cleanup in step 3:
+   - Image refs are **URL-encoded relative paths** — `![](ENI%28Elastic%20Network%20Interface%29/image.png)`. Decode (`%28`→`(`, `%20`→space) to find the real file on disk.
+   - Filenames like `Pasted image 20250901200749.png` — rename on copy (step 3).
+   - Obsidian **callouts** (`> [!NOTE] title`) don't render in Chirpy/kramdown. Convert to a Chirpy prompt: put the body in a blockquote followed by `{: .prompt-info }` (`.prompt-tip` / `.prompt-warning` / `.prompt-danger` also exist), folding the callout title into the text.
+   - Bear escapes some Markdown — `### 1\. 제목` → `### 1. 제목`.
+
+   **Leave `sources/` untouched** — it's the user's archive of originals, and it's git-ignored.
 
 1. **Slug & filename.** Derive a URL slug from the title: **keep Korean as-is**, lowercase Latin letters, replace spaces with `-`, and drop punctuation (`+ : ? , . ( )` etc.). E.g. `"CloudWatch Logs에서 ... export하는 방법 + ... 권한설정"` → `cloudwatch-logs에서-...-export하는-방법-최소-권한-원칙으로-s3-권한설정`. Create `_posts/YYYY-MM-DD-<slug>.md` using today's date (or a date the user specifies). Confirm the filename before writing. (This slug also becomes the post URL `/posts/<slug>/` and the image folder — see step 3.)
 
