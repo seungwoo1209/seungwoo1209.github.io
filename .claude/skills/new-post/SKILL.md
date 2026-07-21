@@ -39,11 +39,21 @@ description: Scaffold a new Chirpy blog post from draft notes dropped in sources
    ---
    title: "<title>"
    date: <YYYY-MM-DD HH:MM:SS +0900>
-   categories: [<Category>]
+   categories: [<Top>, <Topic>]
    tags: [<tag>, ...]
    ---
    ```
    Omit `layout`, `comments`, `toc` (Chirpy defaults). Add `render_with_liquid: false` only if the body has literal `{{ }}` / `{% %}`.
+
+   **Categories are two-level: `[<Top>, <Topic>]`.** The top level is always one of these three — pick by the post's *nature*, not its subject:
+
+   | Top | For |
+   |---|---|
+   | `Project` | 포트폴리오 프로젝트의 진행 과정·디버깅 |
+   | `Worklog` | 프로젝트 급은 아닌 일일·소규모 작업 |
+   | `Knowledge` | 누구나 알 수 있는 일반 지식 |
+
+   The second level is the subject — reuse an existing one (`AWS`, `CS`, …) when it fits, otherwise coin a short one. When the top level is ambiguous, ask; the common ambiguity is a hands-on how-to that also teaches something generalizable (`Knowledge` if a stranger could reuse it, `Worklog` if it's a record of what you did that day).
 
 3. **Images.** For every image the draft references:
    - Copy the file into `assets/img/<slug>/` (create the dir). **Rename to remove spaces** — `image 1.png` → `image-1.png` — so paths need no URL-encoding.

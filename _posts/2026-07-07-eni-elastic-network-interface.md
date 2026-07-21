@@ -1,7 +1,7 @@
 ---
 title: "ENI(Elastic Network Interface)"
 date: 2026-07-07 16:43:37 +0900
-categories: [AWS]
+categories: [Knowledge, AWS]
 tags: [ENI, EC2, VPC]
 ---
 **가상의 네트워크 카드(랜카드) 를 나타내는 VPC의 논리적 구성요소**다.

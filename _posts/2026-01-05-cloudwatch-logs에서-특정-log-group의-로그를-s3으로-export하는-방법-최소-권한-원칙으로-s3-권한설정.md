@@ -2,7 +2,7 @@
 layout: post
 title: "CloudWatch Logs를 S3으로 export + S3 권한설정"
 date: 2026-01-05 04:12:41 +0900
-categories: [AWS]
+categories: [Worklog, AWS]
 ---
 ### 1. 일반 export 과정
 내가 날짜(시간)을 정하면 해당 로그가 그대로 s3으로 export 되는 기능이다.
