@@ -137,7 +137,11 @@ assets:
 pwa:
   enabled: true # the option for PWA feature (installable)
   cache:
-    enabled: true # the option for PWA offline cache
+    # Off on purpose. The service worker serves cached pages cache-first without
+    # revalidating, so edits to an already-visited page (notably '/', which is
+    # precached) kept showing the stale version until the visitor accepted the
+    # update prompt. Setting this to false makes the worker purge every cache.
+    enabled: false # the option for PWA offline cache
     # Paths defined here will be excluded from the PWA cache.
     # Usually its value is the `baseurl` of another website that
     # shares the same domain name as the current website.
