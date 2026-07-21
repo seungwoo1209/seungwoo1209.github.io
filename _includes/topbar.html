@@ -8,9 +8,14 @@
     <nav id="breadcrumb" aria-label="Breadcrumb">
       {% assign paths = page.url | split: '/' %}
 
-      {% if paths.size == 0 or page.layout == 'home' %}
+      {%- comment -%}
+        The site root serves the category index, so label it with its own title
+        rather than "home". Every other page — including the post list at /posts/,
+        which still uses the 'home' layout — goes through the crumb loop below.
+      {%- endcomment -%}
+      {% if paths.size == 0 %}
         <!-- index page -->
-        <span>{{ site.data.locales[include.lang].tabs.home | capitalize }}</span>
+        <span>{{ page.title | default: site.data.locales[include.lang].tabs.home | capitalize }}</span>
 
       {% else %}
         {% for item in paths %}
@@ -30,18 +35,16 @@
 
           {% elsif page.layout == 'category' or page.layout == 'tag' %}
             {%- comment -%}
-              The category index is served at the site root, so '/categories/' does not exist.
+              Skip the 'categories' crumb: the category index lives at the site root,
+              so it would repeat the first crumb and link to the same page.
             {%- endcomment -%}
-            {% if item == 'categories' %}
-              {% assign crumb_url = '/' %}
-            {% else %}
-              {% assign crumb_url = item | append: '/' %}
-            {% endif %}
-            <span>
-              <a href="{{ crumb_url | relative_url }}">
-                {{- site.data.locales[include.lang].tabs[item] | default: page.title -}}
-              </a>
-            </span>
+            {% unless item == 'categories' %}
+              <span>
+                <a href="{{ item | append: '/' | relative_url }}">
+                  {{- site.data.locales[include.lang].tabs[item] | default: page.title -}}
+                </a>
+              </span>
+            {% endunless %}
           {% endif %}
         {% endfor %}
       {% endif %}
