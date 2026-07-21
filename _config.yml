@@ -146,6 +146,10 @@ pwa:
 
 paginate: 10
 
+# The post list lives at /posts/ (the site root serves the category index),
+# so pagination must target that directory instead of the default '/page:num'.
+paginate_path: /posts/page:num
+
 # The base URL of your site
 baseurl: ""
 
