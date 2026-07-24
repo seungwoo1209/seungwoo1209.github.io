@@ -1,8 +1,8 @@
 ---
 title: "OAuth2와 OIDC (1) - OAuth의 기본 개념과 인증 플로우"
 date: 2026-07-21 19:12:19 +0900
-categories: [Knowledge, CS]
-tags: [OAuth, OIDC, Auth, Security]
+categories: [Knowledge]
+tags: [CS, OAuth, OIDC, Auth, Security]
 ---
 
 ### OAuth가 왜 필요해졌나?
