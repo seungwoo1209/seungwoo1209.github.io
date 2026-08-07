@@ -1,0 +1,22 @@
+<!-- A placeholder to allow defining custom metadata -->
+
+{%- comment -%}
+  Web fonts: IBM Plex Sans KR (본문·제목) + JetBrains Mono (코드).
+
+  Chirpy only loads Lato + Source Sans Pro, neither of which carries Hangul
+  glyphs, so Korean body text fell back to whatever the visitor's OS shipped
+  (Apple SD Gothic Neo on macOS, 맑은 고딕 on Windows). Both families here cover
+  what the theme actually needs, so the theme's own webfont link is left alone.
+
+  This hook is the theme's designated extension point at the end of <head>.
+  Using it avoids the alternative — copying `_data/origin/cors.yml` to change
+  one `webfonts:` line — which would freeze the ~20 other CDN versions pinned
+  in that file at whatever the current theme release ships.
+
+  The matching font-family rules live in assets/css/jekyll-theme-chirpy.scss.
+{%- endcomment -%}
+
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap"
+>

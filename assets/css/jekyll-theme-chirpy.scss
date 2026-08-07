@@ -1,0 +1,60 @@
+---
+---
+
+/* prettier-ignore */
+@use 'main
+{%- if jekyll.environment == 'production' -%}
+  .bundle
+{%- endif -%}
+';
+
+/* append your custom style below */
+
+/*
+ * Fonts — IBM Plex Sans KR for text, JetBrains Mono for code.
+ * The @font-face sources are loaded in _includes/metadata-hook.html.
+ *
+ * The theme's `$font-family-base` / `$font-family-heading` are `!default`, but
+ * they cannot be set through `@use 'main' with (...)`: _sass/main.scss forwards
+ * base/components/layout/pages and never abstracts, so a configuration never
+ * reaches the variables. So these override the compiled declarations instead.
+ *
+ * Every selector below is one the theme actually emits a `font-family` on —
+ * matching its specificity, winning on source order. Re-check against the built
+ * CSS after a theme upgrade:
+ *   bundle exec jekyll b && grep -o '[^{}]*{[^{}]*font-family[^{}]*}' \
+ *     _site/assets/css/jekyll-theme-chirpy.css
+ */
+
+:root {
+  --font-sans: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
+    'Malgun Gothic', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+header .post-desc,
+#topbar-title,
+#search-results a,
+#toc-bar .label,
+#toc-solo-trigger .label,
+#toc-popup .header .label,
+#toc-popup #toc-popup-content,
+#notification .toast-body,
+#archives .date.day,
+.pagination,
+.tag span,
+kbd {
+  font-family: var(--font-sans);
+}
+
+/* Line numbers live in `.rouge-gutter pre`, so `pre` covers them too. */
+pre,
+code {
+  font-family: var(--font-mono);
+}
