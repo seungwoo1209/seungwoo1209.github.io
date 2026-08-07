@@ -35,10 +35,10 @@ tags: [알람봇 V2]
 - REST API Gateway는 Lambda Authorizer과 JWT Authorizer를 지원한다.
 - 현재 인증의 구현 요약은 다음과 같다.
 
-> **현재 인증은 Discord OAuth로 사용자를 확인한 뒤, 백엔드가 자체 HS256 JWT를 발급하는 구조**
-{: .prompt-info }
+<details markdown="1">
+<summary>현재 인증의 구현 요약 — Discord OAuth로 사용자를 확인한 뒤, 백엔드가 자체 HS256 JWT를 발급하는 구조 (펼치기)</summary>
 
-#### 1. 로그인 및 JWT 발급
+**1. 로그인 및 JWT 발급**
 
 1. `GET /api/v1/auth/discord/login`
     - 5분짜리 OAuth `state` JWT를 생성합니다.
@@ -50,7 +50,7 @@ tags: [알람봇 V2]
     - DB에서 사용자를 생성하거나 갱신합니다.
     - 자체 access/refresh JWT를 발급합니다.
 
-#### 2. JWT 구조
+**2. JWT 구조**
 
 Access와 refresh JWT에는 다음 claim이 들어갑니다.
 
@@ -73,7 +73,7 @@ Access와 refresh JWT에는 다음 claim이 들어갑니다.
 - Refresh 만료: 30일
 - OAuth state 만료: 5분
 
-#### 3. Access Token 검증
+**3. Access Token 검증**
 
 보호된 API는 `get_current_user` 의존성을 사용합니다.
 
@@ -86,7 +86,7 @@ Access와 refresh JWT에는 다음 claim이 들어갑니다.
 
 따라서 권한과 사용자 상태는 JWT 내용만 믿지 않고 현재 DB 상태를 반영합니다. 관리자 권한도 DB에서 읽은 `user.role`로 검사합니다.
 
-#### 4. Refresh Token 검증과 회전
+**4. Refresh Token 검증과 회전**
 
 `POST /api/v1/auth/refresh` 요청 본문으로 refresh token을 전달합니다.
 
@@ -101,13 +101,13 @@ Access와 refresh JWT에는 다음 claim이 들어갑니다.
 
 즉, refresh token은 한 번 사용하면 폐기되는 **rotation 방식**입니다. 같은 토큰을 재사용하면 401이 발생합니다.
 
-#### 5. 로그아웃
+**5. 로그아웃**
 
 `POST /api/v1/auth/logout`은 refresh JWT의 JTI를 Redis에서 삭제합니다.
 
 다만 access token은 블랙리스트로 관리하지 않기 때문에, 로그아웃해도 기존 access token은 최대 30분 동안 계속 사용할 수 있습니다.
 
----
+</details>
 
 - JWT Authorizer는 OIDC 및 OAuth 2.0 프레임워크의 JWT를 검증하는 방식대로 JWT를 검증한다.
     - [AWS 문서: HTTP API JWT authorizer](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-jwt-authorizer.html)
@@ -183,33 +183,33 @@ Access와 refresh JWT에는 다음 claim이 들어갑니다.
 ### Access Token의 처리
 
 > **Discord OAuth 로그인 수행 과정**
+>
+> 1. `GET /api/v1/auth/discord/login` 엔드포인트로 요청
+> 2. API 서버가 state JWT를 만들고, JWT에 다음 정보를 claim으로 포함하여, url에 `...&state=<state JWT>&...` 로 붙여 redirect (307)
+>     - 5분 만료 시간 (claim: `exp`)
+>     - 128비트 랜덤문자열(claim: `jti`, `uuid4().hex`)
+>     - 토큰의 타입(claim: `typ`, 값은 "state")
+> 3. 사용자는 discord로 리다이렉트된 후 필요한 절차를 거친다.
+>     - discord 로그인
+>     - API 서버가 요청한 scope에 대한 허가
+>         - `identify` 와 `applications.commands` 스코프를 허가한다.
+>             - identify: 사용자 기본 프로필 조회, Discord ID, username 등 조회
+>             - `applications.commands`: `integration_type=1`과 함께 사용하면 사용자 계정에 앱을 설치(이제 DM을 보낼 수 있다)
+> 4. discord에 의해 사용자가 리다이렉트되어 `GET /api/v1/auth/discord/callback?code=...&state=...` 형태로 다시 서버에 API 콜, API 서버는 JWT를 검증한다.
+>     - 서명이 올바른가?
+>     - `exp`가 지나지 않았는가?
+>     - `typ == "state"`?
+>     - `jti`가 존재하는가?
+> 5. `state_used:<jti값>` 을 redis에 저장
+>     - **목적: 재사용 방지**
+>     - 세부 쿼리: `SET state_used:<jti값> "1" NX EX 300`
+>         - 키가 없을 때만 저장하며, TTL은 5분으로 설정하는 쿼리
+>         - 이 쿼리는 atomic하게 수행된다. 즉, 동시에 두 jti 값을 가진 요청이 도착해서, 두 요청에 대해 없음을 동시에 확인한 후 둘 다 저장에 성공하는 race condition의 발생을 방지한다.
+>     - 만약 저장에 실패 시, INVALID_OAUTH_STATE 에러 코드와 401을 반환한다.
+> 6. redis에 저장 성공 시, authorization code를 Discord access token으로 교환
+>     - token으로 discord user id와 username을 수집
+>     - user 테이블에 사용자 추가
 {: .prompt-info }
-
-1. `GET /api/v1/auth/discord/login` 엔드포인트로 요청
-2. API 서버가 state JWT를 만들고, JWT에 다음 정보를 claim으로 포함하여, url에 `...&state=<state JWT>&...` 로 붙여 redirect (307)
-    - 5분 만료 시간 (claim: `exp`)
-    - 128비트 랜덤문자열(claim: `jti`, `uuid4().hex`)
-    - 토큰의 타입(claim: `typ`, 값은 "state")
-3. 사용자는 discord로 리다이렉트된 후 필요한 절차를 거친다.
-    - discord 로그인
-    - API 서버가 요청한 scope에 대한 허가
-        - `identify` 와 `applications.commands` 스코프를 허가한다.
-            - identify: 사용자 기본 프로필 조회, Discord ID, username 등 조회
-            - `applications.commands`: `integration_type=1`과 함께 사용하면 사용자 계정에 앱을 설치(이제 DM을 보낼 수 있다)
-4. discord에 의해 사용자가 리다이렉트되어 `GET /api/v1/auth/discord/callback?code=...&state=...` 형태로 다시 서버에 API 콜, API 서버는 JWT를 검증한다.
-    - 서명이 올바른가?
-    - `exp`가 지나지 않았는가?
-    - `typ == "state"`?
-    - `jti`가 존재하는가?
-5. `state_used:<jti값>` 을 redis에 저장
-    - **목적: 재사용 방지**
-    - 세부 쿼리: `SET state_used:<jti값> "1" NX EX 300`
-        - 키가 없을 때만 저장하며, TTL은 5분으로 설정하는 쿼리
-        - 이 쿼리는 atomic하게 수행된다. 즉, 동시에 두 jti 값을 가진 요청이 도착해서, 두 요청에 대해 없음을 동시에 확인한 후 둘 다 저장에 성공하는 race condition의 발생을 방지한다.
-    - 만약 저장에 실패 시, INVALID_OAUTH_STATE 에러 코드와 401을 반환한다.
-6. redis에 저장 성공 시, authorization code를 Discord access token으로 교환
-    - token으로 discord user id와 username을 수집
-    - user 테이블에 사용자 추가
 
 - Valkey(Elasticache) 에서 state 재사용을 방지하기 위해 `jti` 값을 저장한다.
     - 값을 그대로 DynamoDB로 저장하면 되긴 하지만, `SET NX` 의 원자성에 대해 고려할 필요가 있다.
@@ -219,9 +219,12 @@ Access와 refresh JWT에는 다음 claim이 들어갑니다.
 
 ### Refresh Token의 저장과 처리
 
+<details markdown="1">
+<summary>현재 refresh token의 관리 방식 (AI 요약) — 펼치기</summary>
+
 현재 refresh token은 **30일 만료 JWT + Redis JTI 화이트리스트 + 매 갱신 시 rotation** 방식으로 동작한다(아래는 AI 요약). 토큰 원문은 서버에 저장하지 않고, Redis에는 해당 토큰의 식별자인 `jti`만 저장한다.
 
-#### 1. 설정
+**1. 설정**
 
 기본 설정은 다음과 같습니다.
 
@@ -233,7 +236,7 @@ JWT_REFRESH_EXPIRY_DAYS=30
 
 Access·refresh·OAuth state JWT 모두 같은 secret과 알고리즘을 사용하고, `typ` claim으로 용도를 구분합니다.
 
-#### 2. Refresh JWT 생성
+**2. Refresh JWT 생성**
 
 `create_refresh_token(user_id, discord_id)`가 다음 payload를 생성합니다.
 
@@ -259,7 +262,7 @@ Access·refresh·OAuth state JWT 모두 같은 secret과 알고리즘을 사용�
 
 `aud`, `iss`, refresh token family ID 같은 claim은 현재 없습니다.
 
-#### 3. 최초 발급
+**3. 최초 발급**
 
 Discord OAuth 콜백이 성공하면 다음 순서로 처리됩니다.
 
@@ -291,7 +294,7 @@ SET refresh_jti:{jti} "{user_id}" EX 2592000
 
 백엔드는 이후 프론트엔드가 refresh token을 어디에 저장하는지 관여하지 않습니다. HttpOnly 쿠키 설정 등의 서버 로직도 없습니다.
 
-#### 4. Refresh 요청
+**4. Refresh 요청**
 
 엔드포인트는 다음과 같습니다.
 
@@ -316,7 +319,7 @@ Access token이 없어도 호출할 수 있으며, `Authorization` 헤더를 확
 }
 ```
 
-#### 5. JWT 자체 검증
+**5. JWT 자체 검증**
 
 먼저 `decode_token(token, TokenType.REFRESH)`를 호출합니다.
 
@@ -345,7 +348,7 @@ payload["typ"] == "refresh"
 
 다만 `exp`, `sub`, `jti`, `discord_id`를 필수 claim으로 명시한 `require` 옵션은 사용하지 않습니다.
 
-#### 6. Redis 화이트리스트 검증
+**6. Redis 화이트리스트 검증**
 
 JWT 검증 후 payload에서 다음 값을 꺼냅니다.
 
@@ -371,7 +374,7 @@ JWT의 sub == Redis에 저장된 user_id
 
 Redis 키의 존재 여부만 사용합니다.
 
-#### 7. Rotation
+**7. Rotation**
 
 검증에 성공하면 기존 refresh token을 폐기하고 새 토큰 쌍을 발급합니다.
 
@@ -397,7 +400,7 @@ SET refresh_jti:{new_jti} "{user_id}" EX 2592000
 
 새 refresh token의 만료는 다시 현재 시점부터 30일로 설정됩니다. 사용자가 30일 이내에 계속 갱신하면 세션을 계속 연장할 수 있고, 별도의 절대 최대 세션 수명은 없습니다.
 
-#### 8. 로그아웃
+**8. 로그아웃**
 
 엔드포인트는 다음과 같습니다.
 
@@ -425,7 +428,7 @@ Content-Type: application/json
 - 이미 발급된 access token도 폐기되지 않습니다.
 - 기존 access token은 기본 30분 만료까지 계속 사용할 수 있습니다.
 
-#### 9. 만료 처리
+**9. 만료 처리**
 
 Refresh token에는 두 가지 만료 조건이 함께 적용됩니다.
 
@@ -436,7 +439,7 @@ Refresh token에는 두 가지 만료 조건이 함께 적용됩니다.
 
 Redis TTL은 JWT의 실제 `exp`에서 계산하지 않고 고정적으로 `30 × 86400`초를 적용합니다. JWT `exp`는 정수 초로 절삭되기 때문에 두 만료 시점에 미세한 차이가 생길 수 있습니다. 다만 JWT 검증이 먼저 수행되어 보안 영향은 거의 없고, Redis 키가 아주 조금 더 오래 남을 수 있습니다.
 
-#### 10. 사용자 DB 상태와의 관계
+**10. 사용자 DB 상태와의 관계**
 
 Refresh 과정에서는 사용자 테이블을 다시 조회하지 않습니다. JWT의 다음 값을 그대로 신뢰해 새 토큰을 만듭니다.
 
@@ -454,7 +457,7 @@ discord_id = payload["discord_id"]
 
 즉 삭제된 사용자가 실제 보호 API에 접근하지는 못하지만, 사용할 수 없는 새 토큰을 계속 발급받을 수는 있습니다.
 
-#### 11. Redis/ElastiCache 의존성
+**11. Redis/ElastiCache 의존성**
 
 `AuthService`는 애플리케이션 공용 Redis 클라이언트를 주입받습니다.
 
@@ -463,6 +466,8 @@ discord_id = payload["discord_id"]
 - 테스트: `fakeredis`
 
 Redis 장애 시 refresh, logout, 최초 로그인 발급 과정이 정상 완료되지 않습니다. 애플리케이션 시작 때도 Redis `PING`을 실행하므로 시작 시점부터 연결되지 않으면 서버가 기동하지 않습니다.
+
+</details>
 
 #### 현재의 방식 vs opaque token
 
