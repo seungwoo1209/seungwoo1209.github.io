@@ -36,7 +36,9 @@ tags: [알람봇 V2]
 - 현재 인증의 구현 요약은 다음과 같다.
 
 <details markdown="1">
-<summary>현재 인증의 구현 요약 — Discord OAuth로 사용자를 확인한 뒤, 백엔드가 자체 HS256 JWT를 발급하는 구조 (펼치기)</summary>
+<summary>현재의 인증 구현 (AI 요약)</summary>
+
+Discord OAuth로 사용자를 확인한 뒤, 백엔드가 자체 HS256(대칭키 서명) JWT를 발급한다. 
 
 **1. 로그인 및 JWT 발급**
 
@@ -220,7 +222,7 @@ Access와 refresh JWT에는 다음 claim이 들어갑니다.
 ### Refresh Token의 저장과 처리
 
 <details markdown="1">
-<summary>현재 refresh token의 관리 방식 (AI 요약) — 펼치기</summary>
+<summary>현재 refresh token의 관리 방식 (AI 요약)</summary>
 
 현재 refresh token은 **30일 만료 JWT + Redis JTI 화이트리스트 + 매 갱신 시 rotation** 방식으로 동작한다(아래는 AI 요약). 토큰 원문은 서버에 저장하지 않고, Redis에는 해당 토큰의 식별자인 `jti`만 저장한다.
 
